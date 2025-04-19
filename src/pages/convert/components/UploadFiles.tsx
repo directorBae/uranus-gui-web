@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import styled from "styled-components";
+import { useAppContext } from "../../../store/useAppContext";
 
 // 커스텀 props 타입 정의
 interface DropzoneProps {
@@ -118,8 +119,11 @@ const UploadFiles: React.FC<UploadFilesProps> = ({
   maxFiles = 1,
   maxSize = 1024 * 1024 * 1024, // 1GB
 }) => {
-  const [files, setFiles] = useState<File[]>([]);
+  const { state, dispatch } = useAppContext();
   const [error, setError] = useState<string | null>(null);
+
+  // 로컬 상태와 전역 상태를 동기화
+  const files = state.file.videoFiles;
 
   // 파일 변경 시 부모 컴포넌트에 알림
   useEffect(() => {
@@ -165,16 +169,24 @@ const UploadFiles: React.FC<UploadFilesProps> = ({
       );
 
       if (newFiles.length > 0) {
-        setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+        // 전역 상태에 파일 추가
+        dispatch({
+          type: "ADD_VIDEO_FILES",
+          payload: { files: newFiles },
+        });
         setError(null);
       }
     },
-    [files, maxFiles, maxSize]
+    [files, maxFiles, maxSize, dispatch]
   );
 
   // 파일 제거 함수
   const removeFile = (index: number) => {
-    setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    // 전역 상태에서 파일 제거
+    dispatch({
+      type: "REMOVE_VIDEO_FILE",
+      payload: { index },
+    });
     setError(null);
   };
 
@@ -229,6 +241,19 @@ const UploadFiles: React.FC<UploadFilesProps> = ({
       </DropzoneContainer>
 
       {error && <ErrorMessage>{error}</ErrorMessage>}
+
+      {files.length > 0 && (
+        <div style={{ marginTop: "15px", textAlign: "right" }}>
+          <RemoveButton
+            onClick={(e) => {
+              e.stopPropagation();
+              dispatch({ type: "CLEAR_VIDEO_FILES" });
+            }}
+          >
+            모든 파일 제거
+          </RemoveButton>
+        </div>
+      )}
     </div>
   );
 };

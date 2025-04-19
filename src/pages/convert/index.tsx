@@ -1,5 +1,9 @@
 import React from "react";
 import UploadFiles from "./components/UploadFiles";
+import VideoMetaChecker from "./components/VideoMetaChecker";
+import DroneValueSetter from "./components/DroneValueSetter";
+import VideoConverter from "./components/VideoConverter";
+import { ColumnBox, RowBox } from "../../components/ui/FlexBox";
 
 export default function Convert() {
   return (
@@ -17,7 +21,14 @@ export default function Convert() {
       }}
     >
       <h1>파일 변환</h1>
-      <UploadFiles />
+      <ColumnBox>
+        <RowBox>
+          <UploadFiles />
+          <VideoMetaChecker />
+        </RowBox>
+        <DroneValueSetter />
+        <VideoConverter />
+      </ColumnBox>
     </div>
   );
 }

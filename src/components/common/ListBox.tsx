@@ -9,7 +9,6 @@ const FileListContainer = styled.div`
 
   padding: 1rem;
   width: 12rem;
-  height: 100vh;
 
   box-sizing: border-box;
   gap: 1rem;

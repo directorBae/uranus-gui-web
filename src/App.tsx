@@ -8,6 +8,7 @@ import {
 import "./App.css";
 import FuckinRacistButton from "./components/common/FuckinRacistButton";
 import Sidebar from "./components/ui/Sidebar";
+import { AppProvider } from "./store/AppContext";
 
 // 페이지 컴포넌트 임포트
 import Home from "./pages/home";
@@ -64,7 +65,9 @@ function AppLayout() {
 function App() {
   return (
     <Router>
-      <AppLayout />
+      <AppProvider>
+        <AppLayout />
+      </AppProvider>
     </Router>
   );
 }
