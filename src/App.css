@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
 }
 
 .App-logo {
@@ -35,4 +39,29 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* 콘텐츠 영역 스타일 */
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 사이드바 관련 스타일 - Sidebar 컴포넌트에 적용될 수 있도록 */
+:root {
+  --sidebar-width: 240px;
+}
+
+/* 전체 화면 설정 */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
