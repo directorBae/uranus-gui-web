@@ -171,6 +171,14 @@ export const mockConnectToPi = async (
   piId: string
 ): Promise<{ success: boolean; message: string }> => {
   console.log("목업 API 호출: connectToPi", piId);
+  if (piId === "pi-drone-03") {
+    // 연결 실패 시나리오
+    await new Promise((resolve) => setTimeout(resolve, 1200));
+    return {
+      success: false,
+      message: "연결에 실패했습니다. 기기를 확인해주세요.",
+    };
+  }
   await new Promise((resolve) => setTimeout(resolve, 1200));
   return mockConnectResponse;
 };
